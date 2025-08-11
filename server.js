@@ -3,9 +3,10 @@ const app = express()
 const Path = require("path");
 const PORT  = 3001
 const db = require('./db')
+const passport = require('./auth')
 // const Person = require('./models/person')
 // const Item = require('./models/items')
-const passport = require('./auth')
+
 
 // body parser to handle incoming data
 const bodyParser =require("body-parser");
