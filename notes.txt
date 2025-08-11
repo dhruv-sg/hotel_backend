@@ -1,0 +1,22 @@
+// to start local mongodb
+// ./mongod --dbpath /Users/dhruv/db
+
+
+   const data = req.body; // assuming that request body contains person data
+
+    //create a new person dcument using the mongoose model
+    const newPerson = new Person(data); //directly pass dataa in this
+
+
+    // newPerson.name = data.name;
+    // newPerson.age = data.age;
+    // newPerson.mobile = data.mobile;  //not a good way to store data
+    // newPerson.address = data.address;
+    // newPerson.work = data.work;
+    // newPerson.salary = data.salary;
+
+   try {
+    
+   } catch (error) {
+    
+   }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+</head>
+<body>
+  <center>
+    <h1>Welcome to my app</h1><br>
+    <form>
+      Enter first number: <input type="number" id="a"><br><br>
+      Enter second number: <input type="number" id="b"><br><br>
+      <button onclick="sum(event)">Sum</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+      function sum(event) {
+        event.preventDefault();
+        let a = parseFloat(document.getElementById("a").value);
+        let b = parseFloat(document.getElementById("b").value);
+        let result = a + b;
+        document.getElementById("result").innerHTML = "Result: " + result;
+        console.log("Sum is", result);
+      }
+    </script>
+  </center>
+</body>
+</html>
