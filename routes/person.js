@@ -1,25 +1,64 @@
 const express = require("express");
 const router = express.Router();
 const Person = require('./../models/person')
+const {jwtAuthMiddleware,generatetoken} = require('./../jwt')
 
 //  to add person 
-router.post("/",async (req,res)=>{
+router.post("/signup",async (req,res)=>{
  try {
      const data = req.body; // assuming that request body contains person data
 
     //create a new person document using the mongoose model
     const newPerson = new Person(data); //directly pass dataa in this
+
+    //save the data 
     const response = await newPerson.save()
     console.log('data saved')
-    res.status(200).json(response);
+
+    //payload for jwt
+    const payload = {
+      id : response.id,
+      username : response.username
+    }
+    const token = generatetoken(payload)
+    res.status(200).json({response:response,token:token});
  } catch (error) {
     console.log(error);
  }
     })
 
+//user login to get token
+router.post('/login',async(req,res)=>{
+  try {
+    //extract username and password from body
+    const {username,password} = req.body;
 
-    //  to get all person
-router.get('/',async (req,res)=>{
+    //find the userby username
+    const user = await Person.findOne({username : username});
+
+    //if user not exist or password not match return error
+    if(!user ){
+      return res.status(401).json({error: " invalid username or password"})
+    }
+
+    //generate token
+    const payload = {
+      id : user.id,
+      username : user.username
+    }
+    const token = generatetoken(payload)
+
+    //return token as responce
+    res.json({token})
+  } catch (error) {
+    console.log(error);
+
+    
+  }
+})
+
+//  to get all person
+router.get('/',jwtAuthMiddleware,async (req,res)=>{
 try {
     const data = await Person.find();
     // const data = await Person.find().select('name age');  // to display only some field
