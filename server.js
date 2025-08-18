@@ -4,8 +4,6 @@ const Path = require("path");
 const PORT  = 3001
 const db = require('./db')
 const passport = require('./auth')
-require('dotenv').config();
-
 // const Person = require('./models/person')
 // const Item = require('./models/items')
 

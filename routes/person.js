@@ -37,7 +37,7 @@ router.post('/login',async(req,res)=>{
     const user = await Person.findOne({username : username});
 
     //if user not exist or password not match return error
-    if(!user ){
+    if(!user || !(await user.comparePassword(password))){
       return res.status(401).json({error: " invalid username or password"})
     }
 
@@ -52,7 +52,6 @@ router.post('/login',async(req,res)=>{
     res.json({token})
   } catch (error) {
     console.log(error);
-
     
   }
 })
